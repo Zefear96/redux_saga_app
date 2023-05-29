@@ -16,7 +16,7 @@ const Pagination = ({
 					key={pageNumber}
 					onClick={() => handlePageChange(pageNumber)}
 					className={`${
-						currentPage === pageNumber ? "bg-orange-400" : "bg-green-400"
+						currentPage === pageNumber ? "bg-blue-400" : "bg-violet-200"
 					} cursor-pointer border rounded-md mx-1 w-10 h-10`}
 				>
 					{pageNumber}

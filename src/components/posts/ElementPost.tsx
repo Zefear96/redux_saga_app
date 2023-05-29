@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Post } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
+import CommentsPost from "./CommentsPost";
 
-const ElementPost = ({ post }: { post: Post }) => {
+const ElementPost = ({ post, author }: { post: Post; author: string }) => {
 	const navigate = useNavigate();
+	const [showComments, setShowComments] = useState(false);
+
+	const handleOpenComments = () => {
+		setShowComments(true);
+	};
+
+	const handleCloseComments = () => {
+		setShowComments(false);
+	};
 
 	return (
 		<Card className="text-center my-3">
@@ -16,18 +26,26 @@ const ElementPost = ({ post }: { post: Post }) => {
 					className=" w-10 h-10 object-contain cursor-pointer"
 					onClick={() => navigate(`/users/${post.id}`)}
 				/>
-				<span className="row-cols-1"> created by: {post.userId}</span>
+				<span className="row-cols-1">created by: {author}</span>
 			</Card.Header>
 			<Card.Body className="d-flex flex-column h-100">
-				<Card.Title className="h-14">{post.title}</Card.Title>
-				<Card.Text className=" h-20">
-					{post.body.substring(0, 100) + "..."}
-				</Card.Text>
-				<Button variant="primary" className="mt-auto">
-					See more
-				</Button>
+				<Card.Title className=" my-3">{post.title.toUpperCase()}</Card.Title>
+				<Card.Text className="">{post.body}</Card.Text>
 			</Card.Body>
-			<Card.Footer className="text-muted">Comments</Card.Footer>
+			<Card.Footer className="text-muted">
+				<Button
+					variant="primary"
+					className="mt-auto"
+					onClick={handleOpenComments}
+				>
+					Comments
+				</Button>
+				<CommentsPost
+					show={showComments}
+					handleClose={handleCloseComments}
+					id={post.id}
+				/>
+			</Card.Footer>
 		</Card>
 	);
 };

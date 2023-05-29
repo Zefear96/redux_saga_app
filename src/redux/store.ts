@@ -1,9 +1,17 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import rootReducer, { fetchPostsRequest } from "./reducers";
-import rootSaga from "./saga/postsSaga";
+import rootSaga from "./sagas/indexSaga";
+import postsReducer from "./reducers/postsSlice";
+import usersReducer from "./reducers/usersSlice";
+import commentsReducer from "./reducers/commentsSlice";
 
 const sagaMiddleware = createSagaMiddleware();
+
+const rootReducer = combineReducers({
+	posts: postsReducer,
+	users: usersReducer,
+	comments: commentsReducer,
+});
 
 const store = configureStore({
 	reducer: rootReducer,
@@ -19,5 +27,3 @@ sagaMiddleware.run(rootSaga);
 export default store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
-console.log(store.dispatch(fetchPostsRequest()));
