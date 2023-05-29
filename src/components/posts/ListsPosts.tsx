@@ -7,7 +7,6 @@ import Pagination from "react-bootstrap/Pagination";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ElementPost from "./ElementPost";
-import { RootState } from "../../redux/store";
 import { useAppSelector } from "../../redux/hooks";
 import { fetchPostsRequest } from "../../redux/reducers/postsSlice";
 import { Post } from "../../utils/types";

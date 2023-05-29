@@ -4,11 +4,15 @@ import { fetchUsersRequest } from "../reducers/usersSlice";
 import { fetchPosts } from "./postsSaga";
 import { fetchUsers } from "./usersSaga";
 import { fetchComments } from "./comments";
+import { fetchCommentsRequest } from "../reducers/commentsSlice";
+import { fetchUserByIdRequest } from "../reducers/userByIdSlice";
+import { fetchUserById } from "./userByIdSaga";
 
 function* watchFetchRequest() {
 	yield takeEvery(fetchPostsRequest, fetchPosts);
 	yield takeEvery(fetchUsersRequest, fetchUsers);
-	yield takeEvery(fetchUsersRequest, fetchComments);
+	yield takeEvery(fetchCommentsRequest, fetchComments);
+	yield takeEvery(fetchUserByIdRequest, fetchUserById);
 }
 
 export default function* rootSaga() {

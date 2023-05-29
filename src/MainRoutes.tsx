@@ -11,7 +11,6 @@ const MainRoutes = () => {
 			<Route path="/" element={<ListsPosts />} />
 			<Route path="/information" element={<AboutMe />} />
 			<Route path="/users/:id" element={<UsersDetails />} />
-			{/* <Route path="/comments/:id" element={<CommentsPost />} /> */}
 		</Routes>
 	);
 };

@@ -1,7 +1,11 @@
 import { put, takeEvery, all, call, delay } from "redux-saga/effects";
 import axios from "axios";
 import { API_URL } from "../../utils/constants";
-import { fetchUsersFailure, fetchUsersSuccess } from "../reducers/usersSlice";
+import {
+	fetchUsersFailure,
+	fetchUsersRequest,
+	fetchUsersSuccess,
+} from "../reducers/usersSlice";
 
 export function* fetchUsers() {
 	try {

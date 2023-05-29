@@ -4,6 +4,7 @@ import rootSaga from "./sagas/indexSaga";
 import postsReducer from "./reducers/postsSlice";
 import usersReducer from "./reducers/usersSlice";
 import commentsReducer from "./reducers/commentsSlice";
+import userByIdReducer from "./reducers/userByIdSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
 	posts: postsReducer,
 	users: usersReducer,
 	comments: commentsReducer,
+	userById: userByIdReducer,
 });
 
 const store = configureStore({

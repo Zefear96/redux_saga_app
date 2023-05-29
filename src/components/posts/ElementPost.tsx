@@ -24,7 +24,7 @@ const ElementPost = ({ post, author }: { post: Post; author: string }) => {
 					src="https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png"
 					alt="avatar"
 					className=" w-10 h-10 object-contain cursor-pointer"
-					onClick={() => navigate(`/users/${post.id}`)}
+					onClick={() => navigate(`/users/${post.userId}`)}
 				/>
 				<span className="row-cols-1">created by: {author}</span>
 			</Card.Header>
