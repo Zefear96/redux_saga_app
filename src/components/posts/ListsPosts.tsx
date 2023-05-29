@@ -22,7 +22,7 @@ const ListsPosts = () => {
 	const users = useAppSelector((state) => state.users.data);
 	const searchQuery = useAppSelector((state) => state.posts.searchQuery);
 	const orderQuery = useAppSelector((state) => state.posts.orderQuery);
-	const [order, setOrder] = useState<string>("title A-B");
+	const [order, setOrder] = useState<string>("");
 
 	// console.log(posts);
 	// console.log(users);
@@ -71,7 +71,6 @@ const ListsPosts = () => {
 	));
 
 	const handleOrder = (selectedOrder: string) => {
-		// setOrder(selectedOrder);
 		dispatch(setOrderQuery(selectedOrder));
 	};
 
@@ -84,7 +83,7 @@ const ListsPosts = () => {
 					role="status"
 					aria-hidden="true"
 				/>
-				<span> Loading...</span>
+				<span className=" mx-2 text-base"> Loading...</span>
 			</div>
 		);
 	}

@@ -58,7 +58,7 @@ const UsersDetails = () => {
 					role="status"
 					aria-hidden="true"
 				/>
-				<span> Loading...</span>
+				<span className=" mx-2"> Loading...</span>
 			</div>
 		);
 	}

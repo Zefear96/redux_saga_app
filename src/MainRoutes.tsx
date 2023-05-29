@@ -9,7 +9,7 @@ const MainRoutes = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<ListsPosts />} />
-			<Route path="/information" element={<AboutMe />} />
+			<Route path="/about/me" element={<AboutMe />} />
 			<Route path="/users/:id" element={<UsersDetails />} />
 		</Routes>
 	);

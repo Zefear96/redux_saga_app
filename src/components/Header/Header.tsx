@@ -9,10 +9,12 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FormEvent, useEffect, useState } from "react";
 import { fetchPostsRequest } from "../../redux/reducers/postsSlice";
 import { setSearchQuery } from "../../redux/reducers/postsSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 	const searchQuery = useAppSelector((state) => state.posts.searchQuery);
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const [searchValue, setSearchValue] = useState<string>("");
 
 	const handleSearch = (event: FormEvent<HTMLFormElement>) => {
@@ -20,16 +22,10 @@ const Header = () => {
 		dispatch(setSearchQuery(searchValue.toLowerCase()));
 	};
 
-	// const handleResetSearch = () => {
-	// 	setSearchValue(""); // Очистка значения инпута
-	// 	dispatch(setSearchQuery("")); // Сброс параметра поиска
-	// 	dispatch(fetchPostsRequest({ search: "", filter: "" })); // Выполнение запроса без параметра поиска
-	// };
-
 	return (
 		<Navbar bg="primary" variant="dark" expand="lg">
 			<Container fluid>
-				<Navbar.Brand href="#">HOME</Navbar.Brand>
+				<Navbar.Brand onClick={() => navigate("/")}>HOME</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbarScroll" />
 				<Navbar.Collapse id="navbarScroll">
 					<Nav
@@ -37,8 +33,8 @@ const Header = () => {
 						style={{ maxHeight: "100px" }}
 						navbarScroll
 					>
-						<Nav.Link href="#action1">Posts List</Nav.Link>
-						<Nav.Link href="#action2">About Me</Nav.Link>
+						<Nav.Link onClick={() => navigate("/")}>Posts List</Nav.Link>
+						<Nav.Link onClick={() => navigate("/about/me")}>About Me</Nav.Link>
 					</Nav>
 					<Form className="d-flex" onSubmit={handleSearch}>
 						<Form.Control
