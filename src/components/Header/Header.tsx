@@ -20,16 +20,16 @@ const Header = () => {
 		dispatch(setSearchQuery(searchValue.toLowerCase()));
 	};
 
-	const handleResetSearch = () => {
-		setSearchValue(""); // Очистка значения инпута
-		dispatch(setSearchQuery("")); // Сброс параметра поиска
-		dispatch(fetchPostsRequest({ search: "", filter: "" })); // Выполнение запроса без параметра поиска
-	};
+	// const handleResetSearch = () => {
+	// 	setSearchValue(""); // Очистка значения инпута
+	// 	dispatch(setSearchQuery("")); // Сброс параметра поиска
+	// 	dispatch(fetchPostsRequest({ search: "", filter: "" })); // Выполнение запроса без параметра поиска
+	// };
 
 	return (
 		<Navbar bg="primary" variant="dark" expand="lg">
 			<Container fluid>
-				<Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+				<Navbar.Brand href="#">HOME</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbarScroll" />
 				<Navbar.Collapse id="navbarScroll">
 					<Nav

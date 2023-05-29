@@ -3,12 +3,17 @@ import { Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ElementPost from "./ElementPost";
 import { useAppSelector } from "../../redux/hooks";
-import { fetchPostsRequest } from "../../redux/reducers/postsSlice";
+import {
+	fetchPostsRequest,
+	setOrderQuery,
+} from "../../redux/reducers/postsSlice";
 import { Post } from "../../utils/types";
 import { fetchUsersRequest } from "../../redux/reducers/usersSlice";
 
@@ -16,17 +21,19 @@ const ListsPosts = () => {
 	const posts = useAppSelector((state) => state.posts.data);
 	const users = useAppSelector((state) => state.users.data);
 	const searchQuery = useAppSelector((state) => state.posts.searchQuery);
+	const orderQuery = useAppSelector((state) => state.posts.orderQuery);
+	const [order, setOrder] = useState<string>("title A-B");
 
-	console.log(posts);
-	console.log(users);
+	// console.log(posts);
+	// console.log(users);
 
 	const loadingPosts = useAppSelector((state) => state.posts.loading);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchPostsRequest({ search: searchQuery, filter: "" }));
+		dispatch(fetchPostsRequest({ search: searchQuery, order: orderQuery }));
 		dispatch(fetchUsersRequest());
-	}, [dispatch, searchQuery]);
+	}, [dispatch, searchQuery, orderQuery]);
 
 	// Pagination
 	const [currentPage, setCurrentPage] = useState(1);
@@ -63,29 +70,45 @@ const ListsPosts = () => {
 		</Pagination.Item>
 	));
 
+	const handleOrder = (selectedOrder: string) => {
+		// setOrder(selectedOrder);
+		dispatch(setOrderQuery(selectedOrder));
+	};
+
 	if (loadingPosts) {
 		return (
-			<Container
-				fluid
-				className="d-flex justify-content-center align-items-center vh-100"
-			>
-				<Row>
-					<Col className="text-center">
-						<Spinner
-							animation="border"
-							size="sm"
-							role="status"
-							aria-hidden="true"
-						/>
-						<span> Loading...</span>
-					</Col>
-				</Row>
-			</Container>
+			<div className="flex justify-center items-center h-screen">
+				<Spinner
+					animation="border"
+					size="sm"
+					role="status"
+					aria-hidden="true"
+				/>
+				<span> Loading...</span>
+			</div>
 		);
 	}
 
 	return (
 		<Container className="mx-auto my-5">
+			<DropdownButton id="dropdown-basic-button" title={`Sort by: ${order}`}>
+				<Dropdown.Item
+					onClick={() => {
+						handleOrder("asc");
+						setOrder("title A-B");
+					}}
+				>
+					Title A-B
+				</Dropdown.Item>
+				<Dropdown.Item
+					onClick={() => {
+						handleOrder("desc");
+						setOrder("title B-A");
+					}}
+				>
+					Title B-A
+				</Dropdown.Item>
+			</DropdownButton>
 			<Row className=" row-cols-1">
 				{posts && posts.length !== 0 ? (
 					currentPosts.map((post: Post) => (

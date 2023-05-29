@@ -7,6 +7,7 @@ interface PostsState {
 	loading: boolean;
 	error: string | null;
 	searchQuery: string;
+	orderQuery: string;
 }
 
 const initialState: PostsState = {
@@ -14,11 +15,12 @@ const initialState: PostsState = {
 	loading: false,
 	error: null,
 	searchQuery: "",
+	orderQuery: "asc",
 };
 
 interface FetchPostsRequestPayload {
 	search: string | null;
-	filter: string | null;
+	order: string | null;
 }
 
 const postsSlice = createSlice({
@@ -43,6 +45,12 @@ const postsSlice = createSlice({
 			state.error = null; // Сбрасываем сообщение об ошибке
 			state.data = []; // Очищаем массив данных постов
 		},
+		setOrderQuery(state, action: PayloadAction<string>) {
+			state.orderQuery = action.payload;
+			state.loading = true; // Устанавливаем флаг загрузки в true
+			state.error = null; // Сбрасываем сообщение об ошибке
+			state.data = []; // Очищаем массив данных постов
+		},
 	},
 });
 
@@ -51,6 +59,7 @@ export const {
 	fetchPostsSuccess,
 	fetchPostsFailure,
 	setSearchQuery,
+	setOrderQuery,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

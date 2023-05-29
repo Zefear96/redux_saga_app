@@ -47,7 +47,7 @@ const CommentsPost = ({
 					: "Empty!"}
 			</Modal.Body>
 			<Modal.Footer>
-				<Button variant="secondary" onClick={handleClose}>
+				<Button variant="primary" onClick={handleClose}>
 					Back
 				</Button>
 			</Modal.Footer>

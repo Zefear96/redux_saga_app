@@ -17,16 +17,18 @@ import { fetchUserByIdRequest } from "../../redux/reducers/userByIdSlice";
 const UsersDetails = () => {
 	const dispatch = useAppDispatch();
 	const posts = useAppSelector((state) => state.posts.data);
+	const users = useAppSelector((state) => state.users.data);
+	const currentUser = useAppSelector((state) => state.userById.data);
+	const loadingFetchUsers = useAppSelector((state) => state.users.loading);
+	const errorFetchUsers = useAppSelector((state) => state.users.error);
+	const loadingPosts = useAppSelector((state) => state.posts.loading);
+	const errorFetchPosts = useAppSelector((state) => state.posts.error);
+
 	const { id } = useParams();
 	console.log(typeof id);
 
 	const userId = id ? +id : 0;
 	console.log(typeof userId);
-
-	const users = useAppSelector((state) => state.users.data);
-	const currentUser = useAppSelector((state) => state.userById.data);
-	const loadingPosts = useAppSelector((state) => state.posts.loading);
-	const loadingUsers = useAppSelector((state) => state.users.loading);
 
 	console.log(currentUser);
 
@@ -35,7 +37,7 @@ const UsersDetails = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		dispatch(fetchPostsRequest({ search: "", filter: "" }));
+		dispatch(fetchPostsRequest({ search: "", order: "" }));
 		dispatch(fetchUsersRequest());
 		dispatch(fetchUserByIdRequest(userId));
 	}, [dispatch, userId]);
@@ -47,24 +49,26 @@ const UsersDetails = () => {
 		return user ? user.name : "";
 	}
 
-	if (loadingPosts || loadingUsers) {
+	if (loadingPosts || loadingFetchUsers) {
 		return (
-			<Container
-				fluid
-				className="d-flex justify-content-center align-items-center vh-100"
-			>
-				<Row>
-					<Col className="text-center">
-						<Spinner
-							animation="border"
-							size="sm"
-							role="status"
-							aria-hidden="true"
-						/>
-						<span> Loading...</span>
-					</Col>
-				</Row>
-			</Container>
+			<div className="flex justify-center items-center h-screen">
+				<Spinner
+					animation="border"
+					size="sm"
+					role="status"
+					aria-hidden="true"
+				/>
+				<span> Loading...</span>
+			</div>
+		);
+	}
+
+	if (errorFetchPosts && errorFetchUsers) {
+		const error = errorFetchPosts || errorFetchUsers;
+		return (
+			<div className="flex justify-center items-center h-screen">
+				Error: {error}
+			</div>
 		);
 	}
 
@@ -84,7 +88,7 @@ const UsersDetails = () => {
 			<Button variant="primary" onClick={() => navigate(-1)} className=" my-3">
 				Back
 			</Button>
-			<h1 className=" my-2 text-center uppercase">Users Information</h1>
+			<h2 className=" my-2 text-center uppercase">Users Information</h2>
 			<Card>
 				<Card.Header className=" flex items-center justify-center">
 					<img

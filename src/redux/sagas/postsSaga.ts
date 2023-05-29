@@ -6,11 +6,12 @@ import { AnyAction } from "redux";
 
 export function* fetchPosts(action: AnyAction) {
 	try {
-		const { search, filter } = action.payload; // Получение параметров из action.payload
+		const { search, order } = action.payload; // Получение параметров из action.payload
+
 		const queryParams = {
 			title_like: search || null,
-			_sort: filter || null,
-			_order: "asc" || null,
+			_sort: "title",
+			_order: order || null,
 		};
 
 		yield delay(500);

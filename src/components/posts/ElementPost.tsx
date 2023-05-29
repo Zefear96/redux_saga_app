@@ -19,11 +19,11 @@ const ElementPost = ({ post, author }: { post: Post; author: string }) => {
 
 	return (
 		<Card className="text-center my-3">
-			<Card.Header className=" row-cols-1 ">
+			<Card.Header className="flex items-center ">
 				<img
 					src="https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png"
 					alt="avatar"
-					className=" w-10 h-10 object-contain cursor-pointer"
+					className=" w-10 h-10 object-contain cursor-pointer mx-3"
 					onClick={() => navigate(`/users/${post.userId}`)}
 				/>
 				<span className="row-cols-1">created by: {author}</span>
@@ -32,12 +32,8 @@ const ElementPost = ({ post, author }: { post: Post; author: string }) => {
 				<Card.Title className=" my-3">{post.title.toUpperCase()}</Card.Title>
 				<Card.Text className="">{post.body}</Card.Text>
 			</Card.Body>
-			<Card.Footer className="text-muted">
-				<Button
-					variant="primary"
-					className="mt-auto"
-					onClick={handleOpenComments}
-				>
+			<div className="">
+				<Button variant="primary" className="my-3" onClick={handleOpenComments}>
 					Comments
 				</Button>
 				<CommentsPost
@@ -45,7 +41,7 @@ const ElementPost = ({ post, author }: { post: Post; author: string }) => {
 					handleClose={handleCloseComments}
 					id={post.id}
 				/>
-			</Card.Footer>
+			</div>
 		</Card>
 	);
 };
