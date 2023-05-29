@@ -5,8 +5,28 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FormEvent, useEffect, useState } from "react";
+import { fetchPostsRequest } from "../../redux/reducers/postsSlice";
+import { setSearchQuery } from "../../redux/reducers/postsSlice";
+import { XCircle } from "react-bootstrap-icons";
 
 const Header = () => {
+	const searchQuery = useAppSelector((state) => state.posts.searchQuery);
+	const dispatch = useAppDispatch();
+	const [searchValue, setSearchValue] = useState<string>("");
+
+	const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		dispatch(setSearchQuery(searchValue.toLowerCase()));
+	};
+
+	const handleResetSearch = () => {
+		setSearchValue(""); // Очистка значения инпута
+		dispatch(setSearchQuery("")); // Сброс параметра поиска
+		dispatch(fetchPostsRequest({ search: "", filter: "" })); // Выполнение запроса без параметра поиска
+	};
+
 	return (
 		<Navbar bg="primary" variant="dark" expand="lg">
 			<Container fluid>
@@ -18,30 +38,22 @@ const Header = () => {
 						style={{ maxHeight: "100px" }}
 						navbarScroll
 					>
-						<Nav.Link href="#action1">Home</Nav.Link>
-						<Nav.Link href="#action2">Link</Nav.Link>
-						<NavDropdown title="Link" id="navbarScrollingDropdown">
-							<NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-							<NavDropdown.Item href="#action4">
-								Another action
-							</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item href="#action5">
-								Something else here
-							</NavDropdown.Item>
-						</NavDropdown>
-						<Nav.Link href="#" disabled>
-							Link
-						</Nav.Link>
+						<Nav.Link href="#action1">Posts List</Nav.Link>
+						<Nav.Link href="#action2">About Me</Nav.Link>
 					</Nav>
-					<Form className="d-flex">
+					<Form className="d-flex" onSubmit={handleSearch}>
 						<Form.Control
 							type="search"
 							placeholder="Search"
 							className="me-2"
 							aria-label="Search"
+							value={searchValue}
+							onChange={(e) => setSearchValue(e.target.value)}
 						/>
-						<Button variant="success">Search</Button>
+
+						<Button variant="success" type="submit">
+							Search
+						</Button>
 					</Form>
 				</Navbar.Collapse>
 			</Container>

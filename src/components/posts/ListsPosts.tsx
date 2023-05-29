@@ -15,17 +15,18 @@ import { fetchUsersRequest } from "../../redux/reducers/usersSlice";
 const ListsPosts = () => {
 	const posts = useAppSelector((state) => state.posts.data);
 	const users = useAppSelector((state) => state.users.data);
+	const searchQuery = useAppSelector((state) => state.posts.searchQuery);
+
 	console.log(posts);
 	console.log(users);
 
 	const loadingPosts = useAppSelector((state) => state.posts.loading);
 	const dispatch = useDispatch();
-	const [searchQuery, setSearchQuery] = useState("");
 
 	useEffect(() => {
-		dispatch(fetchPostsRequest());
+		dispatch(fetchPostsRequest({ search: searchQuery, filter: "" }));
 		dispatch(fetchUsersRequest());
-	}, [dispatch]);
+	}, [dispatch, searchQuery]);
 
 	// Pagination
 	const [currentPage, setCurrentPage] = useState(1);
@@ -43,20 +44,9 @@ const ListsPosts = () => {
 		pageNumbers.push(i);
 	}
 
-	const handlePageChange = (pageNumber: number) => {
-		setCurrentPage(pageNumber);
-	};
-
 	function handleSetAuthor(post: Post) {
 		const user = users.find((user) => user.id === post.userId);
 		return user ? user.name : "";
-	}
-
-	function handleFind(post: Post) {
-		const titleMatch = post.title
-			.toLowerCase()
-			.includes(searchQuery.toLowerCase());
-		return titleMatch;
 	}
 
 	const handlePaginationItemClick = (pageNumber: number) => {
@@ -105,7 +95,7 @@ const ListsPosts = () => {
 					))
 				) : (
 					<Col>
-						<h1>"Empty!"</h1>
+						<h1 className=" text-center">"Empty!"</h1>
 					</Col>
 				)}
 			</Row>

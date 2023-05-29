@@ -6,19 +6,26 @@ interface PostsState {
 	data: Post[];
 	loading: boolean;
 	error: string | null;
+	searchQuery: string;
 }
 
 const initialState: PostsState = {
 	data: [],
 	loading: false,
 	error: null,
+	searchQuery: "",
 };
+
+interface FetchPostsRequestPayload {
+	search: string | null;
+	filter: string | null;
+}
 
 const postsSlice = createSlice({
 	name: "posts",
 	initialState,
 	reducers: {
-		fetchPostsRequest(state) {
+		fetchPostsRequest(state, action: PayloadAction<FetchPostsRequestPayload>) {
 			state.loading = true;
 			state.error = null;
 		},
@@ -30,10 +37,20 @@ const postsSlice = createSlice({
 			state.loading = false;
 			state.error = action.payload;
 		},
+		setSearchQuery(state, action: PayloadAction<string>) {
+			state.searchQuery = action.payload;
+			state.loading = true; // Устанавливаем флаг загрузки в true
+			state.error = null; // Сбрасываем сообщение об ошибке
+			state.data = []; // Очищаем массив данных постов
+		},
 	},
 });
 
-export const { fetchPostsRequest, fetchPostsSuccess, fetchPostsFailure } =
-	postsSlice.actions;
+export const {
+	fetchPostsRequest,
+	fetchPostsSuccess,
+	fetchPostsFailure,
+	setSearchQuery,
+} = postsSlice.actions;
 
 export default postsSlice.reducer;

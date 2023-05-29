@@ -35,7 +35,7 @@ const UsersDetails = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		dispatch(fetchPostsRequest());
+		dispatch(fetchPostsRequest({ search: "", filter: "" }));
 		dispatch(fetchUsersRequest());
 		dispatch(fetchUserByIdRequest(userId));
 	}, [dispatch, userId]);
