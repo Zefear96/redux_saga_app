@@ -1,4 +1,3 @@
-import { AnyAction } from "redux";
 import { Post } from "../../utils/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 

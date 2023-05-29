@@ -3,16 +3,13 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Offcanvas from "react-bootstrap/Offcanvas";
+
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { FormEvent, useEffect, useState } from "react";
-import { fetchPostsRequest } from "../../redux/reducers/postsSlice";
+import { FormEvent, useState } from "react";
 import { setSearchQuery } from "../../redux/reducers/postsSlice";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-	const searchQuery = useAppSelector((state) => state.posts.searchQuery);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [searchValue, setSearchValue] = useState<string>("");
@@ -46,7 +43,7 @@ const Header = () => {
 							onChange={(e) => setSearchValue(e.target.value)}
 						/>
 
-						<Button variant="success" type="submit">
+						<Button variant="info" type="submit">
 							Search
 						</Button>
 					</Form>
