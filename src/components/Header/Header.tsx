@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FormEvent, useEffect, useState } from "react";
 import { fetchPostsRequest } from "../../redux/reducers/postsSlice";
 import { setSearchQuery } from "../../redux/reducers/postsSlice";
-import { XCircle } from "react-bootstrap-icons";
 
 const Header = () => {
 	const searchQuery = useAppSelector((state) => state.posts.searchQuery);
